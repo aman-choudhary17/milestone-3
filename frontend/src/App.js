@@ -1,25 +1,20 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { Provider } from 'react-redux';
 import './App.css';
+import store from './redux/store';
+import { Card, Header, Slider } from './components';
 
 function App() {
-  const [state, setState] = useState("");
-
-  const onChange = (text) => {
-    setState(text)
-  }
-
-  const onClick = () => {
-    localStorage.setItem('cart', state);
-  }
-;
   return (
-    <div className="App">
-      <header className="App-header">
-        <input type="text" value={state} onChange={(e) => onChange(e.target.value)}/>
-        <input type="submit" onClick={() => onClick()}/>
-        <p>Hello World</p>
-      </header>
-    </div>
+    <Provider store={store}>
+       <div className="App">
+        <header className="App-header">
+          <Header />
+          <Slider />
+          <Card />
+        </header>
+      </div>
+    </Provider>
   );
 }
 
