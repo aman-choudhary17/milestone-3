@@ -8,9 +8,17 @@ const express = require('express')
 const app = express()
 const publicDirectory = path.join(__dirname, '../frontend/public')
 const port = 3000
+const { connect } = require("./db.js")
 
 app.use(express.static(publicDirectory))
 
+
+connect().then((connection) => {
+    console.log("connected database")
+}).catch((error) => {
+    console.log("database error")
+    console.log(error)
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
