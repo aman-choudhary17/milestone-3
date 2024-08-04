@@ -1,37 +1,51 @@
-const validator = require('validator')
-const path = require('path')
-const express = require('express')
-
-// console.log(__dirname)
-// console.log(path.join(__dirname, '../frontend/public'))
-
-const app = express()
-const publicDirectory = path.join(__dirname, '../frontend/public')
-const port = 3000
-const { connect } = require("./db.js")
-
-app.use(express.static(publicDirectory))
+// IMPORT PACAKGES
+const validator = require('validator');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
-connect().then((connection) => {
-    console.log("connected database")
-}).catch((error) => {
-    console.log("database error")
-    console.log(error)
-})
+// IMPORT OTHER FILES
+const dboperation = require('./dboperation');
+var Product = require('./model/product');
+// Import the responseApi.js
+const { success, error, validation } = require("./utils/responseApi");
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// PUBLIC VARIABLE
+const app = express();
+var router = express.Router();
+const port = process.env.PORT || 8090;
 
-app.get('/help', (req, res) => {
-    res.send('Help section')
-})
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use('/api', router);
 
-// app.com
-// app.com/help
-// app.com/about
+router.use((request, response, next) => {
+    console.log('midelware');
+    next();
+});
+
+// FOR SUCESSFULL RESPONSE
+// success(message, { data: "Some random data" }, statusCode)
+
+// FOR ERROR RESPONSE
+// error(message, statusCode)
+
+router.route('/product').get((request, response) => {
+    dboperation.getProducts().then((result) => {
+        // console.log(result);
+        if (Array.isArray(result)) {
+            response
+                .status(200)
+                .json(success("OK", { data: result[0] }, response.statusCode));
+        }
+    });
+});
 
 app.listen(port, () => {
-    console.log(`Server is runing on ${port}`)
-})
+    console.log(`Server is runing on ${port}`);
+    dboperation.checkConnectionToDB();
+
+});

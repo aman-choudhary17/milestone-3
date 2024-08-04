@@ -1,5 +1,3 @@
-const sql = require('mssql')
-
 const config = {
     server: 'webshopdbserver.database.windows.net',
     databse: 'webshopdb',
@@ -10,9 +8,7 @@ const config = {
         enableArithAbort: true,
         trustServerCertificate: true,
     },
+    port: 1433
 };
 
-module.exports = {
-    connect: () => sql.connect(config),
-    sql,
-}
+module.exports = config;
