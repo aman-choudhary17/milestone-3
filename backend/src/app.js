@@ -40,6 +40,8 @@ router.route('/product').get((request, response) => {
             response
                 .status(200)
                 .json(success("OK", { data: result[0] }, response.statusCode));
+        } else if (typeof (error) == String) {
+            res.status(500).json(error(error, res.statusCode));
         }
     });
 });
