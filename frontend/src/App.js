@@ -1,6 +1,5 @@
 import React from 'react'
 import { Provider } from 'react-redux';
-import './App.css';
 import store from './redux/store';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Cart, Checkout, Home, Product, Products } from './pages';
