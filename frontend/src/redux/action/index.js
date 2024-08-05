@@ -21,3 +21,35 @@ export const clearCart = (product) =>{
         payload:product
     }
 }
+
+// For Search Item 
+export const searchItem = (product) =>{
+    return {
+        type:'SEARCH_ITEM',
+        payload:product
+    }
+}
+
+// For Get Items
+export const getItems = (products) =>{
+    return {
+        type: 'GET_ITEMS',
+        payload: products
+    }
+}
+
+// For Get Categories 
+export const getCat = (product) =>{
+    return {
+        type: 'GET_CAT',
+        payload: product
+    }
+}
+
+// For Get Prices 
+export const getPrc = (range) => {
+    return {
+        type: 'GET_PRC',
+        payload: range
+    }
+}
