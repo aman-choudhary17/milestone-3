@@ -40,8 +40,62 @@ router.route('/product').get((request, response) => {
             response
                 .status(200)
                 .json(success("OK", { data: result[0] }, response.statusCode));
-        } else if (typeof (error) == String) {
-            res.status(500).json(error(error, res.statusCode));
+        } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
+        }
+    });
+});
+
+router.route('/product/:id').get((request, response) => {
+    dboperation.getSingleProducts(request.params.id).then((result) => {
+        // console.log(result);
+        if (Array.isArray(result)) {
+            response
+                .status(200)
+                .json(success("OK", Object.assign({}, ...result[0]), response.statusCode));
+        } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
+        }
+    });
+});
+
+router.route('/addproduct').post((request, response) => {
+    let product = { ...request.body };
+    dboperation.addProduct(product).then((result) => {
+        // console.log(result);
+        if (Array.isArray(result)) {
+            response
+                .status(200)
+                .json(success("OK", result.length != 0 ? Object.assign({}, ...result[0]) : "Data Inserted", response.statusCode));
+        } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
+        }
+    });
+});
+
+router.route('/updateproduct').post((request, response) => {
+    let product = { ...request.body };
+    dboperation.updateProduct(product).then((result) => {
+        // console.log(result);
+        if (Number.isInteger(result)) {
+            response
+                .status(200)
+                .json(success("OK", `Data updated ${result}`, response.statusCode));
+        } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
+        }
+    });
+});
+
+router.route('/deleteproduct/:id').get((request, response) => {
+    dboperation.deleteProducts(request.params.id).then((result) => {
+        // console.log(result);
+        if (Number.isInteger(result)) {
+            response
+                .status(200)
+                .json(success("OK", `${result} numbers of record deleted`, response.statusCode));
+        } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
         }
     });
 });
