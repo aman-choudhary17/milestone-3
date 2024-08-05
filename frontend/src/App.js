@@ -2,19 +2,22 @@ import React from 'react'
 import { Provider } from 'react-redux';
 import './App.css';
 import store from './redux/store';
-import { Card, Navbar, Slider } from './components';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Cart, Checkout, Home, Product, Products } from './pages';
 
 function App() {
   return (
+    <BrowserRouter>
     <Provider store={store}>
-       <div className="App">
-        <header className="App-header">
-          <Navbar />
-          <Slider />
-          <Card />
-        </header>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<Products />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
     </Provider>
+  </BrowserRouter>
   );
 }
 

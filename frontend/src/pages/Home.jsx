@@ -1,7 +1,13 @@
-import React from 'react'
+import React from 'react';
+// import 'react-toastify/dist/ReactToastify.css';
+import { Navbar, Main, Slider } from "../components";
 
 export const Home = () => {
   return (
-    <div>Home</div>
+    <>
+    <Navbar isShow={true} />
+    <Main />
+    <Slider />
+  </>
   )
 }
