@@ -25,9 +25,9 @@ export const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true);
-      const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+      const response = await fetch(`http://20.47.65.95:8090/api/product/${id}`);
       const data = await response.json();
-      setProduct(data);
+      setProduct(data?.data);
       setLoading(false);
     };
     getProduct();
@@ -65,8 +65,8 @@ export const Product = () => {
         className="d-flex align-items-center col-md-5 col-sm-12 py-3">
           <img
             className="img-fluid"
-            src={product.image}
-            alt={product.title}
+            src={product?.ImageURL}
+            alt={product?.name}
             style={{
               height: "400px", // Set your desired height
               width: "100%", // Set your desired width (100% for responsive)
@@ -76,13 +76,10 @@ export const Product = () => {
         </div>
 
         <div className="col-md-7 col-sm-12 py-5">
-          <h4 className="text-uppercase text-muted">{product.category}</h4>
-          <h1 className="display-5">{product.title}</h1>
-          <p className="lead">
-            {product.rating && product.rating.rate} <i className="fa fa-star"></i>
-          </p>
-          <h3 className="display-6 my-4">${product.price}</h3>
-          <p className="lead">{product.description}</p>
+          <h4 className="text-uppercase text-muted">{product?.category}</h4>
+          <h1 className="display-5">{product?.name}</h1>
+          <h3 className="display-6 my-4">${product?.price}</h3>
+          <p className="lead">{product?.description}</p>
           <Link
             onClick={() => dispatch(addCart(product))}
             to="/checkout"

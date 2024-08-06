@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchItem } from "../redux/action";
 
 export const Navbar = ({isShow=false}) => {
-  const state = useSelector((state) => state.handleCart);
+  const state = useSelector((state) => state?.handleCart);
 
   const dispatch = useDispatch();
 

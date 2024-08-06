@@ -19,10 +19,10 @@ export const Card = () => {
 
   const getProducts = async () => {
     setLoading(true);
-    const response = await fetch("https://fakestoreapi.com/products/");
+    const response = await fetch("http://20.47.65.95:8090/api/product");
+    const data = await response.json()
     if (componentMounted) {
-      const cloneData = await response.clone().json();
-      dispatch(getItems(cloneData));
+      dispatch(getItems(data?.data));
       setLoading(false);
     }
 
@@ -89,19 +89,21 @@ export const Card = () => {
   const getButtons  = () => 
     <div className="buttons py-2">
     <button className={getButtonClassCat(0)} onClick={() => filterProduct("",0)}>All</button>
-    <button className={getButtonClassCat(1)} onClick={() => filterProduct("men's clothing", 1)}>Men's Clothing</button>
-    <button className={getButtonClassCat(2)} onClick={() => filterProduct("women's clothing", 2)}>Women's Clothing</button>
-    <button className={getButtonClassCat(3)} onClick={() => filterProduct("jewelery", 3)}>Jewelery</button>
-    <button className={getButtonClassCat(4)} onClick={() => filterProduct("electronics", 4)}>Electronics</button>    
+    <button className={getButtonClassCat(1)} onClick={() => filterProduct("Rack", 1)}>Rack</button>
+    <button className={getButtonClassCat(2)} onClick={() => filterProduct("Shelf", 2)}>Shelf</button>
+    <button className={getButtonClassCat(3)} onClick={() => filterProduct("Chair", 3)}>Chair</button>
+    <button className={getButtonClassCat(4)} onClick={() => filterProduct("Table", 4)}>Table</button>    
+    <button className={getButtonClassCat(5)} onClick={() => filterProduct("Drawer", 5)}>Drawer</button>  
+    <button className={getButtonClassCat(6)} onClick={() => filterProduct("Bench", 6)}>Bench</button>  
   </div>
   
 
   const getPrices = () => (
     <div className="buttons py-2">
          <button className={getButtonClassPrc(0)} onClick={() => filterPrice(null, 0)}>All</button>
-      <button className={getButtonClassPrc(1)} onClick={() => filterPrice(99.9, 1)}>Under 99.9$</button>
-      <button className={getButtonClassPrc(2)} onClick={() => filterPrice({ min: 100, max: 199.99 }, 2)}>100$ to 199.99$</button>
-      <button className={getButtonClassPrc(3)} onClick={() => filterPrice({ min: 200 }, 3)}>200$ and above</button>
+      <button className={getButtonClassPrc(1)} onClick={() => filterPrice(999.9, 1)}>Under 999.9$</button>
+      <button className={getButtonClassPrc(2)} onClick={() => filterPrice({ min: 1000, max: 4999.99 }, 2)}>1000$ to 4999.99$</button>
+      <button className={getButtonClassPrc(3)} onClick={() => filterPrice({ min: 5000 }, 3)}>5000$ and above</button>
     </div>
   );
   
@@ -119,7 +121,7 @@ export const Card = () => {
         <div className="card text-center h-100" key={product.id}>
           <img
             className="card-img-top p-3"
-            src={product.image}
+            src={product.ImageURL}
             alt="Card"
             style={{
               height: "250px", // Set your desired height
@@ -128,13 +130,13 @@ export const Card = () => {
             }}
           />
           <div className="card-body">
-            <h5 className="card-title">{product.title.substring(0, 12)}</h5>
+            <h5 className="card-title">{product?.name?.substring(0, 12)}</h5>
             <p className="card-text">
-              {product.description.substring(0, 90)}
+              {product?.description.substring(0, 90)}
             </p>
           </div>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item lead">$ {product.price}</li>
+            <li className="list-group-item lead">$ {product?.price}</li>
           </ul>
         </div>
       </div>

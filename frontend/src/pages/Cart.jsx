@@ -72,16 +72,10 @@ export const Cart = () => {
                                 <img
                                   onClick={() => navigate(`/product/${item.id}`)}
                                   style={{marginLeft:"1rem",cursor:'pointer'}}
-                                  src={item.image}
-                                  alt={item.title}
+                                  src={item?.ImageURL}
+                                  alt={item?.name}
                                   width={80}
                                   height={100}
-                                  // style={{
-                                  //   cursor:'pointer',
-                                  //   height: "100px", // Set your desired height
-                                  //   width: "100%",   // Set your desired width (100% for responsive)
-                                  //   objectFit: "contain", // Ensure the entire image is visible
-                                  // }}
                                 />
                               </div>
                             </div>
@@ -95,7 +89,7 @@ export const Cart = () => {
                                 }}
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
-                                >{item.title}</strong>
+                                >{item?.name}</strong>
                               </p>
                             </div>
 
@@ -111,7 +105,7 @@ export const Cart = () => {
                                   <i className="fas fa-minus"></i>
                                 </button>
                                 </div>
-                                <div className="mx-5">{item.qty}</div>
+                                <div className="mx-5">{item?.qty}</div>
                                 <div>                 
                                 <button
                                   className="btn px-1"
