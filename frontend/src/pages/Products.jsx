@@ -1,7 +1,11 @@
 import React from 'react'
+import { Card, Navbar} from "../components"
 
 export const Products = () => {
   return (
-    <div>Products</div>
+    <>
+      <Navbar />
+      <Card />
+    </>
   )
 }

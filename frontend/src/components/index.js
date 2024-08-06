@@ -1,3 +1,3 @@
-export { Card } from "./Card";
-export { Header } from "./Header";
-export { Slider } from "./Slider";
+export { Navbar } from './Navbar';
+export { Slider } from './Slider';
+export { Card } from './Card';
