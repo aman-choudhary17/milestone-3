@@ -1,11 +1,11 @@
 import React from 'react'
-import { Navbar, Slider} from "../components"
+import { Card, Navbar} from "../components"
 
 export const Products = () => {
   return (
     <>
       <Navbar />
-      <Slider />
+      <Card />
     </>
   )
 }

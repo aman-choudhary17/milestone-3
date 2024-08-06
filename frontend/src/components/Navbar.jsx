@@ -31,7 +31,7 @@ export const Navbar = ({isShow=false}) => {
         </form>
         }
         <NavLink to="/cart" className="btn btn-outline-dark m-2">
-          <i className="fa fa-cart-shopping mr-1"></i> Cart 0{" "}
+          <i className="fa fa-cart-shopping mr-1"></i> Cart ({state.length}){" "}
         </NavLink>
       </div>
     </nav>

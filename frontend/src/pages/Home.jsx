@@ -1,13 +1,13 @@
 import React from 'react';
-// import 'react-toastify/dist/ReactToastify.css';
-import { Navbar, Main, Slider } from "../components";
+import 'react-toastify/dist/ReactToastify.css';
+import { Navbar, Slider, Card } from "../components";
 
 export const Home = () => {
   return (
     <>
-    <Navbar isShow={true} />
-    <Main />
-    <Slider />
-  </>
+      <Navbar isShow={true} />
+      <Slider />
+      <Card />
+    </>
   )
 }
