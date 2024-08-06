@@ -45,8 +45,9 @@ async function addProduct(Product) {
             .input('description', sql.VarChar(500), Product.Descritpion)
             .input('price', sql.Decimal(10, 2), Product.Price)
             .input('stock', sql.Int, Product.Stock)
+            .input('ImageURL', sql.NVarChar, Product.ImageUrl)
             .execute('addproduct');
-        return insterProduct.recordsets;
+        return insterProduct.rowsAffected;
     } catch (error) {
         console.log(error);
         return String(error);
@@ -84,6 +85,23 @@ async function deleteProducts(Id) {
     }
 }
 
+async function addSales(Sales) {
+    try {
+        let pool = await sql.connect(config);
+        let insterSales = await pool.request()
+            // .input('id', sql.Int, Product.Id)
+            .input('product_id', sql.Int, Sales.product_id)
+            .input('quantity', sql.Int, Sales.quantity)
+            .input('total_price', sql.Decimal(10, 2), Sales.total_price)
+            .input('sale_date', sql.DateTime, Sales.sale_date)
+            .execute('addsales');
+        return insterSales.rowsAffected;
+    } catch (error) {
+        console.log(error);
+        return String(error);
+    }
+}
+
 module.exports = {
     checkConnectionToDB: checkConnectionToDB,
     getProducts: getProducts,
@@ -91,4 +109,5 @@ module.exports = {
     addProduct: addProduct,
     updateProduct: updateProduct,
     deleteProducts: deleteProducts,
+    addSales: addSales,
 }

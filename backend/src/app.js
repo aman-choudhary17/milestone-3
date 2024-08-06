@@ -39,7 +39,7 @@ router.route('/product').get((request, response) => {
         if (Array.isArray(result)) {
             response
                 .status(200)
-                .json(success("OK", { data: result[0] }, response.statusCode));
+                .json(success("OK", Object.assign(...result), response.statusCode));
         } else if (typeof (result) === "string") {
             response.status(500).json(error(result, response.statusCode));
         }
@@ -94,6 +94,20 @@ router.route('/deleteproduct/:id').get((request, response) => {
             response
                 .status(200)
                 .json(success("OK", `${result} numbers of record deleted`, response.statusCode));
+        } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
+        }
+    });
+});
+
+router.route('/addsales').post((request, response) => {
+    let sales = { ...request.body };
+    dboperation.addSales(sales).then((result) => {
+        // console.log(result);
+        if (Array.isArray(result)) {
+            response
+                .status(200)
+                .json(success("OK", result.length != 0 ? Object.assign({}, ...result[0]) : "Data Inserted", response.statusCode));
         } else if (typeof (result) === "string") {
             response.status(500).json(error(result, response.statusCode));
         }
