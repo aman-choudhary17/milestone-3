@@ -10,14 +10,13 @@ const initialState = {
     switch (type) {
       case "SEARCH_ITEM":
         const filteredItems = state.items.filter((i) =>
-          i.title.toLowerCase().includes(payload.toLowerCase())
+          i?.name.toLowerCase().includes(payload.toLowerCase())
         );
         return {
           ...state,
           filteredItems: filteredItems.length ? filteredItems : state.items
         };
       case "GET_ITEMS":
-        console.log("Payload",payload)
         return {
           ...state,
           items: payload,

@@ -30,6 +30,10 @@ const handleCart = (state=cart, action) => {
             localStorage.setItem('cart', JSON.stringify(newState));
             return newState;
 
+        case "CLEAR_CART":
+            newState = action.payload;
+            localStorage.setItem('cart', JSON.stringify(newState));
+            return newState; 
         default:
             return state;
     }
