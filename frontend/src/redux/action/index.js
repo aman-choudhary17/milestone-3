@@ -15,10 +15,18 @@ export const delCart = (product) =>{
 }
 
 // For Clear Item to Cart
-export const clearCart = (product) =>{
+export const clearItem = (product) =>{
     return {
         type:'CLEAR_ITEM',
         payload:product
+    }
+}
+
+// For Clear Cart
+export const clearCart = () =>{
+    return {
+        type:'CLEAR_CART',
+        payload:[]
     }
 }
 

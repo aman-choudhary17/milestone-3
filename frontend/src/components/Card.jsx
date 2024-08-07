@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback,useRef } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,58 +10,62 @@ export const Card = () => {
   const [loading, setLoading] = useState(false);
   const [catBtn, setCatBtn] = useState(0);
   const [prcBtn, setPrcBtn] = useState(0);
-  let componentMounted = true;
+
+  const componentMounted = useRef(true);
 
   const filteredItems = useSelector((state) => state.handleItem?.filteredItems);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const getProducts = async () => {
+  const getProducts = useCallback(async () => {
     setLoading(true);
     const response = await fetch("http://20.47.65.95:8090/api/product");
-    const data = await response.json()
-    if (componentMounted) {
+    const data = await response.json();
+    if (componentMounted.current) {
       dispatch(getItems(data?.data));
       setLoading(false);
     }
+  }, [dispatch]); // Adding dispatch as a dependency as it might change across renders
 
+  useEffect(() => {
+    // Set componentMounted to true when component is mounted
+    componentMounted.current = true;
+    
+    // Cleanup function to set componentMounted to false on unmount
     return () => {
-      componentMounted = false;
+      componentMounted.current = false;
     };
-  };
-
+  }, []);
+  
   useEffect(() => {
     setFilter(filteredItems);
   }, [filteredItems]);
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [getProducts]);
 
   const Loading = () => {
     return (
       <>
-        <div className="col-12 py-5 text-center">
-          <Skeleton height={40} width={560} />
+        <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
-        </div>
-        <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
       </>
     );
@@ -100,7 +104,7 @@ export const Card = () => {
 
   const getPrices = () => (
     <div className="buttons py-2">
-         <button className={getButtonClassPrc(0)} onClick={() => filterPrice(null, 0)}>All</button>
+      <button className={getButtonClassPrc(0)} onClick={() => filterPrice(null, 0)}>All</button>
       <button className={getButtonClassPrc(1)} onClick={() => filterPrice(999.9, 1)}>Under 999.9$</button>
       <button className={getButtonClassPrc(2)} onClick={() => filterPrice({ min: 1000, max: 4999.99 }, 2)}>1000$ to 4999.99$</button>
       <button className={getButtonClassPrc(3)} onClick={() => filterPrice({ min: 5000 }, 3)}>5000$ and above</button>
