@@ -13,7 +13,6 @@ export const Card = () => {
 
   const componentMounted = useRef(true);
 
-
   const filteredItems = useSelector((state) => state.handleItem?.filteredItems);
 
   const navigate = useNavigate();
@@ -50,26 +49,23 @@ export const Card = () => {
   const Loading = () => {
     return (
       <>
-        <div className="col-12 py-5 text-center">
-          <Skeleton height={40} width={560} />
+        <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
         <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
-        </div>
-        <div className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
-          <Skeleton height={592} />
+          <Skeleton height={450} />
         </div>
       </>
     );
@@ -108,7 +104,7 @@ export const Card = () => {
 
   const getPrices = () => (
     <div className="buttons py-2">
-         <button className={getButtonClassPrc(0)} onClick={() => filterPrice(null, 0)}>All</button>
+      <button className={getButtonClassPrc(0)} onClick={() => filterPrice(null, 0)}>All</button>
       <button className={getButtonClassPrc(1)} onClick={() => filterPrice(999.9, 1)}>Under 999.9$</button>
       <button className={getButtonClassPrc(2)} onClick={() => filterPrice({ min: 1000, max: 4999.99 }, 2)}>1000$ to 4999.99$</button>
       <button className={getButtonClassPrc(3)} onClick={() => filterPrice({ min: 5000 }, 3)}>5000$ and above</button>

@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { Navbar } from "../components";
 import { useSelector, useDispatch } from "react-redux";
-import { addCart, clearCart, delCart } from "../redux/action";
+import { addCart, clearItem, delCart } from "../redux/action";
 import { Link,useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +35,7 @@ export const Cart = () => {
   };
 
   const clearItem = (product) => {
-    dispatch(clearCart(product))
+    dispatch(clearItem(product))
   }
 
   const ShowCart = () => {

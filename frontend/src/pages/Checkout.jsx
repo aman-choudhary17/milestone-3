@@ -1,15 +1,28 @@
 import React, { useMemo, useState } from "react";
-import { Navbar } from "../components";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { CustomModal, Navbar } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { clearCart } from "../redux/action";
 
 export const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
   const [paymentMethod, setPaymentMethod] = useState("0");
+  const [show, setShow] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleSelectChange = ({target}) => {
     setPaymentMethod(target.value);
   };
+
+  const handleClose = () => {
+    dispatch(clearCart());
+    navigate('/');
+    setShow(false);
+  }
+  const handleShow = () => setShow(true);
+  
   
   const EmptyCart = () => {
     return (
@@ -296,6 +309,7 @@ export const Checkout = () => {
                     <hr className="my-4" />
 
                     <button
+                      onClick={handleShow}
                       className="w-100 btn btn-primary "
                       type="submit"
                     >
@@ -317,6 +331,7 @@ export const Checkout = () => {
         <h1 className="text-center">Checkout</h1>
         <hr />
         {state.length ? <ShowCheckout /> : <EmptyCart />}
+        {show && <CustomModal handleClose={handleClose} />}
       </div>
     </>
   );
