@@ -34,7 +34,7 @@ export const Cart = () => {
     dispatch(delCart(product));
   };
 
-  const clearItem = (product) => {
+  const clearItemFromCard = (product) => {
     dispatch(clearItem(product))
   }
 
@@ -128,7 +128,7 @@ export const Cart = () => {
                            <button
                             className="btn px-3"
                             onClick={() => {
-                                clearItem(item);
+                              clearItemFromCard(item);
                               }}
                             >
                               <i className="fa-regular fa-trash-can"></i>
@@ -172,8 +172,7 @@ export const Cart = () => {
 
                     <Link
                       to="/checkout"
-                      className="btn btn-dark btn-lg btn-block"
-                    >
+                      className="btn btn-dark btn-lg btn-block">
                       Go to checkout
                     </Link>
                   </div>

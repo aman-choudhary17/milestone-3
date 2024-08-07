@@ -17,7 +17,6 @@ const initialState = {
           filteredItems: filteredItems.length ? filteredItems : state.items
         };
       case "GET_ITEMS":
-        console.log("Payload==>",payload)
         return {
           ...state,
           items: payload,

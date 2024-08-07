@@ -61,3 +61,26 @@ export const getPrc = (range) => {
         payload: range
     }
 }
+
+
+// For Order Place 
+export const placeOrder = (orderData) => {
+    return (dispatch) => {
+    //   dispatch(placeOrderRequest());
+  
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+  
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(orderData),
+        redirect: "follow"
+      };
+  
+      fetch("http://20.47.65.95:8090/api/placeorder", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log("Result",result))
+        .catch((error) => console.log("Error",error))
+    };
+  };

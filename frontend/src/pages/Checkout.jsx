@@ -1,20 +1,53 @@
-import React, { useMemo, useState } from "react";
-import { CustomModal, Navbar } from "../components";
+import React, { useState } from "react";
+import { CustomModal, Navbar, Paypal } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { clearCart } from "../redux/action";
+import { clearCart, placeOrder } from "../redux/action";
+import { getCurrentDate } from "../utils";
 
 export const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
-  const [paymentMethod, setPaymentMethod] = useState("0");
   const [show, setShow] = useState(false);
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const handleSelectChange = ({target}) => {
-    setPaymentMethod(target.value);
+  const [formData, setFormData] = useState({
+    firstname: '',
+    lastname:'',
+    emailId: '',
+    street: '',
+    country: '',
+    city: '',
+  });
+
+  const { firstname, lastname ,emailId, street, country, city } = formData;
+
+  const onChange = e => {
+    e.preventDefault();
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
   };
+
+
+  const handlePlaceOrder = (amount) => {
+    const orderData = {
+      address1: `${formData.street}`,
+      address2: `${formData.country} ${formData.city}, 94043`,
+      customerName: `${formData.firstname} ${formData.lastname}`,
+      payment_method: "Delivery Items Receipt",
+      emailId: formData.emailId,
+      total: amount.toString(), // Use the amount parameter directly
+      order_date: getCurrentDate()
+    };
+  
+    dispatch(placeOrder(orderData));
+    console.log("Order Data", orderData);
+  };
+  
 
   const handleClose = () => {
     dispatch(clearCart());
@@ -39,82 +72,6 @@ export const Checkout = () => {
     );
   };
 
-  const showCard = useMemo(() => {
-    if (paymentMethod!=="1") return null
-    else {
-      return  (
-        <div className="row gy-3 my-2">
-        <div className="col-md-6">
-        <label for="cc-name" className="form-label">
-          Name on card
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="cc-name"
-          placeholder=""
-          required
-        />
-        <small className="text-muted">
-          Full name as displayed on card
-        </small>
-        <div className="invalid-feedback">
-          Name on card is required
-        </div>
-        </div>
-  
-        <div className="col-md-6">
-          <label for="cc-number" className="form-label">
-            Credit card number
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="cc-number"
-            placeholder=""
-            required
-          />
-          <div className="invalid-feedback">
-            Credit card number is required
-          </div>
-        </div>
-  
-        <div className="col-md-3">
-          <label for="cc-expiration" className="form-label">
-            Expiration
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="cc-expiration"
-            placeholder=""
-            required
-          />
-          <div className="invalid-feedback">
-            Expiration date required
-          </div>
-        </div>
-  
-        <div className="col-md-3">
-          <label for="cc-cvv" className="form-label">
-            CVV
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="cc-cvv"
-            placeholder=""
-            required
-          />
-          <div className="invalid-feedback">
-            Security code required
-          </div>
-        </div>
-      </div>
-      )
-    }},
- [paymentMethod]);
-
   const ShowCheckout = () => {
     let subtotal = 0;
     let shipping = 10.0;
@@ -126,6 +83,7 @@ export const Checkout = () => {
     state.map((item) => {
       return (totalItems += item.qty);
     });
+
     return (
       <>
         <div className="container py-5">
@@ -156,24 +114,28 @@ export const Checkout = () => {
                 </div>
               </div>
             </div>
+
+
             <div className="col-md-7 col-lg-8">
               <div className="card mb-4">
                 <div className="card-header py-3">
                   <h4 className="mb-0">Billing address</h4>
                 </div>
                 <div className="card-body">
-                  <form className="needs-validation" novalidate>
+                  <form className="needs-validation">
                     <div className="row g-3">
                       <div className="col-sm-6 my-1">
-                        <label for="firstName" className="form-label">
+                        <label className="form-label">
                           First name
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="firstName"
                           placeholder="John"
                           required
+                          name="firstname"
+                          value={firstname}
+                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Valid first name is required.
@@ -181,16 +143,17 @@ export const Checkout = () => {
                       </div>
 
                       <div className="col-sm-6 my-1">
-                        <label for="lastName" className="form-label">
+                        <label className="form-label">
                           Last name
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="lastName"
                           placeholder="Doe"
                           required
-                          
+                          name="lastname"
+                          value={lastname}
+                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Valid last name is required.
@@ -198,15 +161,17 @@ export const Checkout = () => {
                       </div>
 
                       <div className="col-12 my-1">
-                        <label for="email" className="form-label">
+                        <label className="form-label">
                           Email
                         </label>
                         <input
                           type="email"
                           className="form-control"
-                          id="email"
                           placeholder="you@example.com"
                           required
+                          name="emailId"
+                          value={emailId}
+                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Please enter a valid email address for shipping
@@ -215,110 +180,78 @@ export const Checkout = () => {
                       </div>
 
                       <div className="col-12 my-1">
-                        <label for="address" className="form-label">
+                        <label className="form-label">
                           Address
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="address"
-                          placeholder="Street"
+                          placeholder="West 110"
                           required
+                          name="street"
+                          value={street}
+                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Please enter your shipping address.
                         </div>
                       </div>
 
-                      <div className="col-12">
-                        <label for="address2" className="form-label">
-                          Address 2{" "}
-                          <span className="text-muted">(Optional)</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="address2"
-                          placeholder="Area"
-                        />
-                      </div>
-
-                      <div className="col-md-5 my-1">
-                        <label for="country" className="form-label">
+                      <div className="col-md-6 my-1">
+                        <label className="form-label">
                           Country
                         </label>
                         <br />
-                        <select className="form-select" id="country" required>
+                        <select
+                         className="form-select" 
+                         value={country} 
+                         name="country" 
+                         onChange={(e) => onChange(e)}
+                         required>
                           <option value="">Please Select</option>
-                          <option>Germany</option>
+                          <option value="Germany">Germany</option>
                         </select>
                         <div className="invalid-feedback">
                           Please select a valid country.
                         </div>
                       </div>
 
-                      <div className="col-md-4 my-1">
-                        <label for="city" className="form-label">
+                      <div className="col-md-6 my-1">
+                        <label className="form-label">
                           City
                         </label>
                         <br />
-                        <select className="form-select" id="city" required>
+                        <select 
+                        className="form-select"
+                        name="city" 
+                        value={city}
+                        onChange={(e) => onChange(e)}
+                        required>
                         <option value="">Please Select</option>
-                          <option>Frankfurt</option>
-                          <option>Berlin</option>
-                          <option>Munich</option>
-                          <option>Hamburg</option>
+                          <option value="Frankfurt">Frankfurt</option>
+                          <option value="Berlin">Berlin</option>
+                          <option value="Munich">Munich</option>
+                          <option value="Hamburg">Hamburg</option>
                         </select>
                         <div className="invalid-feedback">
                           Please provide a valid city.
                         </div>
                       </div>
-
-                      <div className="col-md-3 my-1">
-                        <label for="zip" className="form-label">
-                          Zip
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="zip"
-                          placeholder=""
-                          pattern="^\d{5}$"
-                          minLength="5"
-                          maxLength="5"
-                          required
-                        />
-                        <div className="invalid-feedback">
-                          Zip code required.
-                        </div>
-                      </div>
                     </div>
+
 
                     <hr className="my-4" />
 
                     <h4 className="mb-3" id="payment">Payment Methods</h4>
-                    <select value={paymentMethod} onChange={handleSelectChange} style={{width:"17.5rem"}} className="form-select" required>
-                          <option value="0">Please Select</option>
-                          <option value="1">Card Payment</option>
-                          <option value="2">Paypal</option>
-                          <option value="3">Cash on Delivery</option>
-                      </select>
-
-                      {showCard}
-
                     <hr className="my-4" />
 
-                    <button
-                      onClick={handleShow}
-                      className="w-100 btn btn-primary "
-                      type="submit"
-                    >
-                      Continue to checkout
-                    </button>
+
+                    <Paypal handleShow={handleShow} handlePlaceOrder={handlePlaceOrder} amount={Math.round(subtotal + shipping)} />
                   </form>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </>
