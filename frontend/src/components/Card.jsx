@@ -20,14 +20,21 @@ export const Card = () => {
 
   const getProducts = useCallback(async () => {
     setLoading(true);
-    const response = await fetch("http://20.47.65.95:8090/api/product");
-    const data = await response.json();
-    if (componentMounted.current) {
-      dispatch(getItems(data?.data));
+    try {
+      const response = await fetch("http://20.47.65.95:8090/api/product");
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+
+      if (componentMounted.current) {
+        dispatch(getItems(data?.data));
+      }
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
       setLoading(false);
     }
-  }, [dispatch]); // Adding dispatch as a dependency as it might change across renders
-
+  }, [dispatch]);
+  
   useEffect(() => {
     // Set componentMounted to true when component is mounted
     componentMounted.current = true;
