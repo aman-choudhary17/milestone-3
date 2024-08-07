@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 
 const CLIENT_ID = '619036022077-f6hm09t96qdqlhih1ftg10ibssg06a9t.apps.googleusercontent.com';
-// const CLIENT_SECRET = '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';
 
 const html = `
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
