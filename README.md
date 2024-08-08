@@ -73,3 +73,85 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# BACKEND Work-Flow
+
+# RESTful API Node Express Example
+
+The project builds RESTful APIs using Node.js, Express ...
+
+## Manual Installation
+
+Clone the repo:
+
+bash
+git clone gitrepo_url
+cd backend
+
+Install the dependencies:
+
+bash
+npm install
+
+
+## Table of Contents
+
+- [Commands](#commands)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+
+## Commands
+
+Running in development:
+
+bash
+npm start
+# or
+npm run dev
+
+
+Running in production:
+
+bash
+# build
+npm run build
+# start
+npm run prod
+
+
+## Environment Variables
+
+The environment variables can be found and modified in the .env file.
+
+bash
+# App name
+APP_NAME = # default App Name
+
+# Host
+HOST = # default 0.0.0.0
+# Port
+PORT = # default 8080
+
+#IMPORTAN NOTE:
+We used google api console for sendng email from backend side and in that service we have access_token which is unique as well as valid only for 1 hours and then it expried and email could not send.
+
+## Project Structure
+
+src\
+ |--models\         # Database models
+ |--utils\          # Utility classes and functions
+ |--app.js        # App entry point
+
+
+### API Endpoints
+
+List of available routes:
+
+*Auth routes*:\
+GET api/product - GET ALL PRODUCT FORM DATABASE\
+GET api/product/product_id - GET SINGLE PRODUCT FORM DATABASE\
+POST api/addproduct - ADD PRODUCT\
+POST api/updateproduct - UPDATE PRODUCT DATA\
+GET api/deleteproduct/product_id - DELETE PRODUCT DATA\
+POST api/placeorder - ORDER PRODUCT\
