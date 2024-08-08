@@ -102,6 +102,33 @@ async function addSales(Sales) {
     }
 }
 
+async function addOrders(Orders) {
+    try {
+        let pool = await sql.connect(config);
+        Orders.country = "";
+        Orders.city = "";
+        Orders.zip = "";
+        let insterOrder = await pool.request()
+            // .input('id', sql.Int, Product.Id)
+            .input('first_name', sql.VarChar, Orders.customerName)
+            .input('last_name', sql.VarChar, Orders.customerName)
+            .input('email', sql.VarChar, Orders.emailId)
+            .input('address', sql.VarChar, Orders.address1)
+            .input('address2', sql.VarChar, Orders.address2)
+            .input('country', sql.VarChar, Orders.country)
+            .input('city', sql.VarChar, Orders.city)
+            .input('zip', sql.VarChar, Orders.zip)
+            .input('payment_method', sql.VarChar, Orders.payment_method)
+            .input('amount', sql.Decimal(10, 2), Orders.total)
+            .input('order_date', sql.DateTime, Orders.order_date)
+            .execute('addorder');
+        return insterOrder.rowsAffected;
+    } catch (error) {
+        console.log(error);
+        return String(error);
+    }
+}
+
 module.exports = {
     checkConnectionToDB: checkConnectionToDB,
     getProducts: getProducts,
@@ -110,4 +137,5 @@ module.exports = {
     updateProduct: updateProduct,
     deleteProducts: deleteProducts,
     addSales: addSales,
+    addOrders: addOrders,
 }

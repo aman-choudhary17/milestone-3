@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { Navbar } from "../components";
 import { useSelector, useDispatch } from "react-redux";
-import { addCart, clearCart, delCart } from "../redux/action";
+import { addCart, clearItem, delCart } from "../redux/action";
 import { Link,useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,8 +34,8 @@ export const Cart = () => {
     dispatch(delCart(product));
   };
 
-  const clearItem = (product) => {
-    dispatch(clearCart(product))
+  const clearItemFromCard = (product) => {
+    dispatch(clearItem(product))
   }
 
   const ShowCart = () => {
@@ -72,16 +72,10 @@ export const Cart = () => {
                                 <img
                                   onClick={() => navigate(`/product/${item.id}`)}
                                   style={{marginLeft:"1rem",cursor:'pointer'}}
-                                  src={item.image}
-                                  alt={item.title}
+                                  src={item?.ImageURL}
+                                  alt={item?.name}
                                   width={80}
                                   height={100}
-                                  // style={{
-                                  //   cursor:'pointer',
-                                  //   height: "100px", // Set your desired height
-                                  //   width: "100%",   // Set your desired width (100% for responsive)
-                                  //   objectFit: "contain", // Ensure the entire image is visible
-                                  // }}
                                 />
                               </div>
                             </div>
@@ -95,7 +89,7 @@ export const Cart = () => {
                                 }}
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
-                                >{item.title}</strong>
+                                >{item?.name}</strong>
                               </p>
                             </div>
 
@@ -111,7 +105,7 @@ export const Cart = () => {
                                   <i className="fas fa-minus"></i>
                                 </button>
                                 </div>
-                                <div className="mx-5">{item.qty}</div>
+                                <div className="mx-5">{item?.qty}</div>
                                 <div>                 
                                 <button
                                   className="btn px-1"
@@ -134,7 +128,7 @@ export const Cart = () => {
                            <button
                             className="btn px-3"
                             onClick={() => {
-                                clearItem(item);
+                              clearItemFromCard(item);
                               }}
                             >
                               <i className="fa-regular fa-trash-can"></i>
@@ -178,8 +172,7 @@ export const Cart = () => {
 
                     <Link
                       to="/checkout"
-                      className="btn btn-dark btn-lg btn-block"
-                    >
+                      className="btn btn-dark btn-lg btn-block">
                       Go to checkout
                     </Link>
                   </div>

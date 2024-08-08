@@ -11,6 +11,7 @@ const dboperation = require('./dboperation');
 var Product = require('./model/product');
 // Import the responseApi.js
 const { success, error, validation } = require("./utils/responseApi");
+const invoice = require('./utils/invoice');
 
 // PUBLIC VARIABLE
 const app = express();
@@ -109,6 +110,20 @@ router.route('/addsales').post((request, response) => {
                 .status(200)
                 .json(success("OK", result.length != 0 ? Object.assign({}, ...result[0]) : "Data Inserted", response.statusCode));
         } else if (typeof (result) === "string") {
+            response.status(500).json(error(result, response.statusCode));
+        }
+    });
+});
+
+router.route('/placeorder').post((request, response) => {
+    let options = { ...request.body };
+    dboperation.addOrders(options).then((result) => {
+        if (!(typeof (result) === "string")) {
+            response
+                .status(200)
+                .json(success("OK", result.length != 0 ? Object.assign({}, ...result[0]) : `Email Sent and Data stored`, response.statusCode));
+            invoice.SendEmail(options.emailId);
+        } else {
             response.status(500).json(error(result, response.statusCode));
         }
     });
