@@ -134,7 +134,7 @@ HOST = # default 0.0.0.0
 PORT = # default 8080
 
 #IMPORTAN NOTE:
-We used google api console for sendng email from backend side and in that service we have access_token which is unique as well as valid only for 1 hours and then it expried and email could not send.
+We utilize the Google API Console for sending emails from the backend. The service provides an access token that is unique and valid for only one hour. After expiration, emails cannot be sent.
 
 ## Project Structure
 
