@@ -14,15 +14,11 @@ export const Checkout = () => {
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname:'',
-    emailId: '',
-    street: '',
     country: '',
     city: '',
   });
 
-  const { firstname, lastname ,emailId, street, country, city } = formData;
+  const { country, city } = formData;
 
   const onChange = e => {
     e.preventDefault();
@@ -35,11 +31,11 @@ export const Checkout = () => {
 
   const handlePlaceOrder = (amount) => {
     const orderData = {
-      address1: `${formData.street}`,
+      address1: `west 111`,
       address2: `${formData.country} ${formData.city}, 94043`,
-      customerName: `${formData.firstname} ${formData.lastname}`,
+      customerName: 'John Doe',
       payment_method: "Delivery Items Receipt",
-      emailId: formData.emailId,
+      emailId: "shahzaib@mailinator.com",
       total: amount.toString(), // Use the amount parameter directly
       order_date: getCurrentDate()
     };
@@ -134,8 +130,6 @@ export const Checkout = () => {
                           placeholder="John"
                           required
                           name="firstname"
-                          value={firstname}
-                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Valid first name is required.
@@ -152,8 +146,6 @@ export const Checkout = () => {
                           placeholder="Doe"
                           required
                           name="lastname"
-                          value={lastname}
-                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Valid last name is required.
@@ -170,8 +162,6 @@ export const Checkout = () => {
                           placeholder="you@example.com"
                           required
                           name="emailId"
-                          value={emailId}
-                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Please enter a valid email address for shipping
@@ -189,8 +179,6 @@ export const Checkout = () => {
                           placeholder="West 110"
                           required
                           name="street"
-                          value={street}
-                          onChange={(e) => onChange(e)}
                         />
                         <div className="invalid-feedback">
                           Please enter your shipping address.
