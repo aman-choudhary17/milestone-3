@@ -1,3 +1,6 @@
+# N.B:
+## Please note that the frontend is currently configured for demonstration purposes and uses a static PayPal sandbox account. For testing, all user information related to the address and payment will be processed through this pre-configured account. In the real application, this functionality will be dynamic and work for each user.
+
 # Frontend Work-Flow
 
 # Getting Started with Create React App
