@@ -19,7 +19,6 @@ export const Paypal = ({ amount,handleShow,handlePlaceOrder }) => {
           return actions.order.capture().then(details => {
             handleShow();
             handlePlaceOrder(amount)
-            // alert(`Transaction completed by ${details.payer.name.given_name}`);
           });
         },
         onError: (err) => {
@@ -32,7 +31,7 @@ export const Paypal = ({ amount,handleShow,handlePlaceOrder }) => {
     return () => {
       document.body.removeChild(script);
     };
-  }, [amount]);
+  }, [amount,handleShow,handlePlaceOrder]);
 
   return (
     <div>
