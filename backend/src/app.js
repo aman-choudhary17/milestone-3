@@ -122,7 +122,7 @@ router.route('/placeorder').post((request, response) => {
             response
                 .status(200)
                 .json(success("OK", result.length != 0 ? Object.assign({}, ...result[0]) : `Email Sent and Data stored`, response.statusCode));
-            invoice.SendEmail(options.emailId);
+            // invoice.SendEmail(options.emailId);
         } else {
             response.status(500).json(error(result, response.statusCode));
         }
