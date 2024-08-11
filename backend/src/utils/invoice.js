@@ -860,5 +860,10 @@ async function SendEmail(senderMail) {
 }
 
 module.exports = {
+<<<<<<< HEAD
   SendEmail: SendEmail,
 }
+=======
+    SendEmail: SendEmail,
+}
+>>>>>>> 2e4cd63bfb0491501c80952dec9c31d8a8c5f12b

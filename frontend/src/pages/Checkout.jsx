@@ -9,34 +9,17 @@ export const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
   const [show, setShow] = useState(false);
 
-
   const dispatch = useDispatch();
   const navigate = useNavigate()
-
-  const [formData, setFormData] = useState({
-    country: '',
-    city: '',
-  });
-
-  const { country, city } = formData;
-
-  const onChange = e => {
-    e.preventDefault();
-    setFormData(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }));
-  };
-
 
   const handlePlaceOrder = (amount) => {
     const orderData = {
       address1: `west 111`,
-      address2: `${formData.country} ${formData.city}, 94043`,
+      address2: `Germany Frankfurt, 94043`,
       customerName: 'John Doe',
       payment_method: "Delivery Items Receipt",
       emailId: "shahzaib@mailinator.com",
-      total: amount.toString(), // Use the amount parameter directly
+      total: amount.toString(),
       order_date: getCurrentDate()
     };
   
@@ -129,7 +112,6 @@ export const Checkout = () => {
                           className="form-control"
                           placeholder="John"
                           required
-                          name="firstname"
                         />
                         <div className="invalid-feedback">
                           Valid first name is required.
@@ -145,7 +127,6 @@ export const Checkout = () => {
                           className="form-control"
                           placeholder="Doe"
                           required
-                          name="lastname"
                         />
                         <div className="invalid-feedback">
                           Valid last name is required.
@@ -161,7 +142,6 @@ export const Checkout = () => {
                           className="form-control"
                           placeholder="you@example.com"
                           required
-                          name="emailId"
                         />
                         <div className="invalid-feedback">
                           Please enter a valid email address for shipping
@@ -178,7 +158,6 @@ export const Checkout = () => {
                           className="form-control"
                           placeholder="West 110"
                           required
-                          name="street"
                         />
                         <div className="invalid-feedback">
                           Please enter your shipping address.
@@ -192,10 +171,8 @@ export const Checkout = () => {
                         <br />
                         <select
                          className="form-select" 
-                         value={country} 
-                         name="country" 
-                         onChange={(e) => onChange(e)}
-                         required>
+                         required
+                         >
                           <option value="">Please Select</option>
                           <option value="Germany">Germany</option>
                         </select>
@@ -211,15 +188,10 @@ export const Checkout = () => {
                         <br />
                         <select 
                         className="form-select"
-                        name="city" 
-                        value={city}
-                        onChange={(e) => onChange(e)}
-                        required>
+                        required
+                        >
                         <option value="">Please Select</option>
                           <option value="Frankfurt">Frankfurt</option>
-                          <option value="Berlin">Berlin</option>
-                          <option value="Munich">Munich</option>
-                          <option value="Hamburg">Hamburg</option>
                         </select>
                         <div className="invalid-feedback">
                           Please provide a valid city.
