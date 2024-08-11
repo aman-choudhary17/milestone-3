@@ -1,3 +1,7 @@
+# Links to access application on cloud:
+Frontend : http://20.47.65.95:8080/
+Backend : http://20.47.65.95:8090/
+
 # N.B:
 ## Please note that the frontend is currently configured for demonstration purposes and uses a static PayPal sandbox account. For testing, all user information related to the address and payment will be processed through this pre-configured account. In the real application, this functionality will be dynamic and work for each user.
 
@@ -134,7 +138,7 @@ APP_NAME = # default App Name
 # Host
 HOST = # default 0.0.0.0
 # Port
-PORT = # default 8080
+PORT = # default 8090
 
 #IMPORTAN NOTE:
 We utilize the Google API Console for sending emails from the backend. The service provides an access token that is unique and valid for only one hour. After expiration, emails cannot be sent.
